@@ -7,6 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ReactCore.Data;
+using ReactCore.Models;
+using ReactCore.Repository;
 
 namespace ReactCore
 {
@@ -26,6 +28,7 @@ namespace ReactCore
             services.AddControllersWithViews();
             services.AddControllers();
             services.AddDbContext<ReactCoreAppContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped<IDataRepository<Student>, StudentManager>();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

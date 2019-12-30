@@ -10,6 +10,11 @@ namespace ReactCore.Repository
     public class StudentManager : IDataRepository<Student>
     {
         readonly ReactCoreAppContext _context;
+
+        public StudentManager(ReactCoreAppContext context)
+        {
+            _context = context;
+        }
         public IEnumerable<Student> GetAll()
         {
             return _context.Students.ToList();

@@ -14,12 +14,17 @@ namespace ReactCore.Controller
     {
         public readonly IDataRepository<Student> _dataRepository;
 
+        public StudentController(IDataRepository<Student> data)
+        {
+            _dataRepository = data;
+        }
+
         // GET: api/student
         [HttpGet]
         public IActionResult Get()
         {
-            IEnumerable<Student> employees = _dataRepository.GetAll();
-            return Ok(employees);
+            IEnumerable<Student> student = _dataRepository.GetAll();
+            return Ok(student);
         }
     }
 }
