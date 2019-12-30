@@ -17,7 +17,7 @@ namespace ReactCore
         public static void Main(string[] args)
         {
             IWebHost host = CreateWebHostBuilder(args).Build();
-
+            CreateDbIfNotExist(host);
             host.Run();
         }
 
