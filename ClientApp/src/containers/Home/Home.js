@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import Appbar from './Appbar/Appbar'
 
 
-export class Home extends Component {
+export default class Home extends Component {
   static displayName = Home.name;
 
   render () {

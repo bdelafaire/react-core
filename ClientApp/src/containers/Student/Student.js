@@ -1,30 +1,70 @@
-﻿import React, { Component, useState } from 'react';
-import Appbar from './Appbar/Appbar'
+﻿import React, { useState, useEffect } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import { getPharmacies } from '../../services/studentService'
 
+const useStyles = makeStyles({
+    table: {
+        minWidth: 650,
+    },
+});
 
-export class Student extends Component {
-    render() {
-        return (
-            <div>
-                <h1>Hello, world!</h1>
-                <p>Welcome to your new single-page application, built with:</p>
-                <ul>
-                    <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>
-                    <li><a href='https://facebook.github.io/react/'>React</a> for client-side code</li>
-                    <li><a href='http://getbootstrap.com/'>Bootstrap</a> for layout and styling</li>
-                </ul>
-                <p>To help you get started, we have also set up:</p>
-                <ul>
-                    <li><strong>Client-side navigation</strong>. For example, click <em>Counter</em> then <em>Back</em> to return here.</li>
-                    <li><strong>Development server integration</strong>. In development mode, the development server from <code>create-react-app</code> runs in the background automatically, so your client-side resources are dynamically built on demand and the page refreshes when you modify any file.</li>
-                    <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and your <code>dotnet publish</code> configuration produces minified, efficiently bundled JavaScript files.</li>
-                </ul>
-                <p>The <code>ClientApp</code> subdirectory is a standard React application based on the <code>create-react-app</code> template. If you open a command prompt in that directory, you can run <code>npm</code> commands such as <code>npm test</code> or <code>npm install</code>.</p>
-            </div>
-        );
-    }
+function createData(name, calories, fat, carbs, protein) {
+    return { name, calories, fat, carbs, protein };
 }
 
-export default () => {
-    const [students,setStudents] = useState([])
+const rows = [
+    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+    createData('Eclair', 262, 16.0, 24, 6.0),
+    createData('Cupcake', 305, 3.7, 67, 4.3),
+    createData('Gingerbread', 356, 16.0, 49, 3.9),
+];
+
+function Student() {
+    const classes = useStyles();
+
+    const [students, setStudents] = useEffect([])
+
+    useEffect(() => {
+        getPharmacies().then(data => setStudents(data))
+        console.log('toto')
+    }, [])
+
+    return (
+        <TableContainer component={Paper}>
+            <Table className={classes.table} aria-label="simple table">
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Dessert (100g serving)</TableCell>
+                        <TableCell align="right">Calories</TableCell>
+                        <TableCell align="right">Fat&nbsp;(g)</TableCell>
+                        <TableCell align="right">Carbs&nbsp;(g)</TableCell>
+                        <TableCell align="right">Protein&nbsp;(g)</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {rows.map(row => (
+                        <TableRow key={row.name}>
+                            <TableCell component="th" scope="row">
+                                {row.name}
+                            </TableCell>
+                            <TableCell align="right">{row.calories}</TableCell>
+                            <TableCell align="right">{row.fat}</TableCell>
+                            <TableCell align="right">{row.carbs}</TableCell>
+                            <TableCell align="right">{row.protein}</TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        </TableContainer>
+    );
 }
+
+export default Student

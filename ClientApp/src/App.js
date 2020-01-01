@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router';
-import { Layout } from './containers/Layout/Layout';
-import { Home } from './containers/Home';
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+//import { Layout } from './containers/Layout/Layout';
+import Home  from './containers/Home/Home';
+import Student from './containers/Student/Student';
+import Appbar from './components/Appbar/Appbar'
 
 import './custom.css'
 
@@ -10,9 +12,13 @@ export default class App extends Component {
 
   render () {
     return (
-      <Layout>
-        <Route exact path='/' component={Home} />
-      </Layout>
+        <Router>
+            <>
+            <Appbar/>
+                <Route path="/" component={Home} />
+                <Route path="/student" component={Student} />
+            </>
+        </Router>
     );
   }
 }
